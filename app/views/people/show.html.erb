@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Link:</strong>
-  <%= @person.link %>
+  <strong>Random ID:</strong>
+  <%= @person.random_id %>
 </p>
 
 <p>
@@ -23,11 +23,6 @@
 <p>
   <strong>About:</strong>
   <%= @person.about %>
-</p>
-
-<p>
-  <strong>Special needs:</strong>
-  <%= @person.special_needs %>
 </p>
 
 <%= link_to 'Edit', edit_person_path(@person) %> |

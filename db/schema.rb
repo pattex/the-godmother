@@ -10,18 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_153351) do
+ActiveRecord::Schema.define(version: 2018_10_28_141149) do
 
   create_table "people", force: :cascade do |t|
-    t.string "link", limit: 32
     t.string "name"
     t.string "pronoun"
     t.string "email"
     t.text "about"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "verification_token"
+    t.boolean "verified", default: false
+    t.string "random_id"
     t.index ["email"], name: "index_people_on_email", unique: true
-    t.index ["link"], name: "index_people_on_link", unique: true
+    t.index ["random_id"], name: "index_people_on_random_id", unique: true
+    t.index ["verification_token"], name: "index_people_on_verification_token", unique: true
   end
 
 end
