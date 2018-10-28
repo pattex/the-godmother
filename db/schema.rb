@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_20_140242) do
+ActiveRecord::Schema.define(version: 2018_10_23_153351) do
 
   create_table "people", force: :cascade do |t|
     t.string "link", limit: 32
@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 2018_10_20_140242) do
     t.string "pronoun"
     t.string "email"
     t.text "about"
-    t.text "special_needs"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_people_on_email", unique: true
