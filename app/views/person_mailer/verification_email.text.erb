@@ -1,0 +1,13 @@
+Hi <%= @person.name %>,
+
+you have registered for Chaospatinnen as a <%= @person.role_name.to_s.humanize %>. Welcome!
+
+To be sure we are able to communicate with you and that you really
+registered for Chaospatinnen, you have to confirm your e-mail address
+to us.
+
+To do so, please open this link: <%= [Rails.configuration.x.basic.app_url, 'verify_email', @person.verification_token].join('/') %>
+
+After this is done, your request will be forwarded to the Chaospatinnen orga team.
+
+Thank you.

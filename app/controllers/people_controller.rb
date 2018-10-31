@@ -28,7 +28,6 @@ class PeopleController < ApplicationController
   end
 
   # POST /people
-  # POST /people.json
   def create
     @person = Person.new(person_params)
 
@@ -36,14 +35,11 @@ class PeopleController < ApplicationController
       @person.role = 1
     end
 
-    respond_to do |format|
-      if @person.save
-        format.html { redirect_to @person, notice: 'Person was successfully created.' }
-        format.json { render :show, status: :created, location: @person }
-      else
-        format.html { render :new }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
-      end
+    if @person.save
+      PersonMailer.with(person: @person).verification_email.deliver_now
+      redirect_to @person, notice: 'Person was successfully created.'
+    else
+      render :new
     end
   end
 
@@ -69,6 +65,32 @@ class PeopleController < ApplicationController
       format.html { redirect_to people_url, notice: 'Person was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def verify_email
+    @person = Person.find_by(verification_token: params[:verification_token])
+
+    if @person
+      if (Person::STATES.values - [:unverified]).include?(@person.state_name)
+        msg = { notice: "Your e-mail address is already verified." }
+      elsif @person.state_name == :unverified
+        @person.state_name = :verified
+
+        if @person.save
+          PersonMailer.with(person: @person).new_person_email.deliver_now
+
+          msg = { notice: "Your e-mail address was successfuly verified.\nYour request will now be forwarded to us (the Chaospatinnen orga team) and we will send you an answer as soon as possible… wich can be a while, sorry. ;)" }
+        else
+          msg = { alert: "Something went wrong. You may want to contact us." }
+        end
+      else
+        msg = { alert: "What are you trying here?!" }
+      end
+    else
+      msg = { alert: "Seems like your verification link is broken. Try copy and paste it by hand." }
+    end
+
+    redirect_to home_path, msg
   end
 
   private

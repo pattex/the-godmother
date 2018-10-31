@@ -40,12 +40,12 @@ class Person < ApplicationRecord
   end
 
   def state_name=(s)
-    s = ROLES.key(s.to_sym)
+    s = STATES.key(s.to_sym)
 
     if s
-      self.role = s
+      self.state = s
     else
-      self.role = 1
+      self.state = 1
     end
   end
 
