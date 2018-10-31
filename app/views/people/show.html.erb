@@ -1,27 +1,27 @@
-<p>
-  <strong>Random ID:</strong>
-  <%= @person.random_id %>
-</p>
+<div class="card">
+  <div class="card-header">
+    <%= @person.name %>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title"><%= @person.role_name.to_s.humanize %></h5>
+    <p>
+      <strong>Name:</strong>
+      <%= @person.name %>
+    </p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @person.name %>
-</p>
+    <p>
+      <strong>Pronoun:</strong>
+      <%= @person.pronoun %>
+    </p>
 
-<p>
-  <strong>Pronoun:</strong>
-  <%= @person.pronoun %>
-</p>
+    <p>
+      <strong>Email:</strong>
+      <%= link_to @person.email, 'mailto:' + @person.email %>
+    </p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @person.email %>
-</p>
-
-<p>
-  <strong>About:</strong>
-  <%= @person.about %>
-</p>
-
-<%= link_to 'Edit', edit_person_path(@person) %> |
-<%= link_to 'Back', people_path %>
+    <p>
+      <strong>About:</strong>
+      <%= @person.about %>
+    </p>
+  </div>
+</div>
