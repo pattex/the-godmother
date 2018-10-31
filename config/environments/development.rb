@@ -1,6 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.x.basic.app_url = "http://localhost:3000"
+  config.x.basic.list_address = "arne@kleinerdrei.net"
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
