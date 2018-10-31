@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_30_144435) do
+ActiveRecord::Schema.define(version: 2018_10_31_150435) do
 
   create_table "people", force: :cascade do |t|
     t.string "name"
@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(version: 2018_10_30_144435) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "verification_token"
-    t.boolean "verified", default: false
     t.string "random_id"
     t.integer "role", default: 1
+    t.integer "state", default: 1
     t.index ["email"], name: "index_people_on_email", unique: true
     t.index ["random_id"], name: "index_people_on_random_id", unique: true
     t.index ["verification_token"], name: "index_people_on_verification_token", unique: true
