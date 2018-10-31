@@ -15,6 +15,12 @@ class PeopleController < ApplicationController
   # GET /people/new
   def new
     @person = Person.new
+
+    if ['mentee', 'mentor'].include?(params[:r])
+      @person.role_name = params[:r]
+    else
+      @person.role_name = :mentee
+    end
   end
 
   # GET /people/1/edit
@@ -25,6 +31,10 @@ class PeopleController < ApplicationController
   # POST /people.json
   def create
     @person = Person.new(person_params)
+
+    unless [1, 2].include?(@person.role)
+      @person.role = 1
+    end
 
     respond_to do |format|
       if @person.save
@@ -69,6 +79,6 @@ class PeopleController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      params.require(:person).permit(:random_id, :verification_token, :name, :pronoun, :email, :about)
+      params.require(:person).permit(:role, :random_id, :verification_token, :name, :pronoun, :email, :about)
     end
 end

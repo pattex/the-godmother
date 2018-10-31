@@ -1,4 +1,4 @@
-<h1>Editing Person</h1>
+<h1>Editing <%= @person.role_name.to_s.humanize -%></h1>
 
 <%= render 'form', person: @person %>
 

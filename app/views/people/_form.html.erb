@@ -19,6 +19,8 @@
     <%= form.text_area :about, { rows: 8, class: "form-control" } %>
   </div>
 
+  <%= form.hidden_field :role %>
+
   <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
     Send
   <% end %>
