@@ -1,0 +1,16 @@
+Hi,
+
+this is <%= @person.name %> our new <%= @person.role_name.to_s.humanize %>.
+<%= @person.pronoun ? @person.pronoun : 'They' %> gave us the following information:
+
+
+E-mail:
+<%= @person.email %>
+
+About:
+<%= @person.about %>
+
+----------------------------------------------------------------------
+
+After replying to this mail, please update the <%= @person.role_name.to_s.humanize.downcase %>'s status.
+<%= [Rails.configuration.x.basic.app_url, 'people', @person.random_id].join('/') %>

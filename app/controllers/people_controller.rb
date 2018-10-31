@@ -37,7 +37,7 @@ class PeopleController < ApplicationController
 
     if @person.save
       PersonMailer.with(person: @person).verification_email.deliver_now
-      redirect_to @person, notice: 'Person was successfully created.'
+      redirect_to @person, notice: "You are successfully registered. We sent you a verification mail to your address <#{@person.email}>. You may have to take a look in your junk folder."
     else
       render :new
     end
@@ -79,7 +79,7 @@ class PeopleController < ApplicationController
         if @person.save
           PersonMailer.with(person: @person).new_person_email.deliver_now
 
-          msg = { notice: "Your e-mail address was successfuly verified.\nYour request will now be forwarded to us (the Chaospatinnen orga team) and we will send you an answer as soon as possible… wich can be a while, sorry. ;)" }
+          msg = { notice: "Your e-mail address was successfuly verified.\nYour request will now be forwarded to us (the Chaospatinnen orga team) and we will send you an answer as soon as possible… wich can be a while, sorry for that. ^__^" }
         else
           msg = { alert: "Something went wrong. You may want to contact us." }
         end

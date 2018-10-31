@@ -6,7 +6,7 @@ class PersonMailer < ApplicationMailer
 
     options = {
       to: @person.email,
-      reply_to: Rails.configuration.x.basic.list_address
+      reply_to: Rails.configuration.x.basic.list_address,
       subject: 'Chaospatinnen - E-Mail Verification'
     }
 
