@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_150435) do
+ActiveRecord::Schema.define(version: 2018_11_01_191437) do
 
   create_table "people", force: :cascade do |t|
     t.string "name"
@@ -26,6 +26,21 @@ ActiveRecord::Schema.define(version: 2018_10_31_150435) do
     t.index ["email"], name: "index_people_on_email", unique: true
     t.index ["random_id"], name: "index_people_on_random_id", unique: true
     t.index ["verification_token"], name: "index_people_on_verification_token", unique: true
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer "tag_id"
+    t.integer "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_taggings_on_person_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
