@@ -1,14 +1,4 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: [:show, :edit, :update, :destroy]
-
-  # GET /people
-  def index
-    @people = Person.all
-  end
-
-  # GET /people/1
-  def show
-  end
 
   # GET /people/new
   def new
@@ -21,10 +11,6 @@ class PeopleController < ApplicationController
     end
   end
 
-  # GET /people/1/edit
-  def edit
-  end
-
   # POST /people
   def create
     @person = Person.new(person_params)
@@ -35,25 +21,10 @@ class PeopleController < ApplicationController
 
     if @person.save
       PersonMailer.with(person: @person).verification_email.deliver_now
-      redirect_to @person, notice: "You are successfully registered. We sent you a verification mail to your address <#{@person.email}>. You may have to take a look in your junk folder."
+      redirect_to home_path, notice: "You are successfully registered. We sent you a verification mail to your address <#{@person.email}>. You may have to take a look in your junk folder."
     else
       render :new
     end
-  end
-
-  # PATCH/PUT /people/1
-  def update
-    if @person.update(person_params)
-      redirect_to @person, notice: 'Person was successfully updated.'
-    else
-      render :edit
-    end
-  end
-
-  # DELETE /people/1
-  def destroy
-    @person.destroy
-    redirect_to people_url, notice: 'Person was successfully destroyed.'
   end
 
   def verify_email
@@ -83,11 +54,6 @@ class PeopleController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_person
-      @person = Person.find_by(random_id: params[:random_id])
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
       params.require(:person).permit(:tag_list, :role, :random_id, :verification_token, :name, :pronoun, :email, :about)

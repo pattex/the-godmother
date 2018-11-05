@@ -1,5 +1,3 @@
 <h1>Register as <%= @person.role_name.to_s.humanize -%></h1>
 
 <%= render 'form', person: @person %>
-
-<%= link_to 'Back', people_path %>
