@@ -20,7 +20,7 @@
   </div>
 
   <div class="form-group">
-    <%= form.text_field :tag_list, { placeholder: "e.g. english german coding antifa security freifunk feminism" } %>
+    <%= form.text_field :tag_list, { placeholder: "e.g.: english, german, coding, antifa, security, freifunk, feminism, …", data: raw(tags) } %>
     <small id="pronoun-help" class="form-text text-muted">Please give yourself a few tags, describing the languages you speak and your interests. This helps us to form fitting groups.</small>
   </div>
 
@@ -30,3 +30,8 @@
     Send
   <% end %>
 <% end %>
+
+<%= javascript_tag do %>
+  $.availableTags = <%= raw tags.to_json %>;
+<% end %>
+<%= javascript_include_tag 'people' %>
