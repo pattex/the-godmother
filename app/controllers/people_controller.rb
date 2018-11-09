@@ -64,6 +64,10 @@ class PeopleController < ApplicationController
         msg = { notice: "Your e-mail address is already verified." }
       elsif @person.state_name == :unverified
         @person.state_name = :verified
+        @person.tags.each do |t|
+          t.active = true
+          t.save
+        end
 
         if @person.save
           PersonMailer.with(person: @person).new_person_email.deliver_now
