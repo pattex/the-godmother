@@ -1,4 +1,25 @@
 class PeopleController < ApplicationController
+  QUESTIONS = [
+		["What is two plus two?", "4"],
+		["What is the number before twelve?", "11"],
+		["Five times two is what?", "10"],
+		["Insert the next number in this sequence: 10, 11, 12, 13, 14, …", "15"],
+		["What is five times five?", "25"],
+		["Ten divided by two is what?", "5"],
+		["What day comes after Monday?", "tuesday"],
+		["What is the last month of the year?", "december"],
+		["How many minutes are in an hour?", "60"],
+		["What is the opposite of down?", "up"],
+		["What is the opposite of north?", "south"],
+		["What is the opposite of bad?", "good"],
+		["What is 4 times four?", "16"],
+		["What number comes after 20?", "21"],
+		["What month comes before July?", "june"],
+		["What is fifteen divided by three?", "5"],
+		["What is 14 minus 4?", "10"],
+		["What comes next? 'Monday Tuesday Wednesday …'", "thursday"]
+  ]
+
   before_action :set_person, only: [:show, :edit, :update, :destroy]
 
   # GET /people
@@ -13,6 +34,7 @@ class PeopleController < ApplicationController
   # GET /people/new
   def new
     @person = Person.new
+		@captcha = new_captcha
 
     if ['mentee', 'mentor'].include?(params[:r])
       @person.role_name = params[:r]
@@ -28,12 +50,16 @@ class PeopleController < ApplicationController
   # POST /people
   def create
     @person = Person.new(person_params)
+    @captcha = new_captcha
 
     unless [1, 2].include?(@person.role)
       @person.role = 1
     end
 
-    if @person.save
+    if params[:address].downcase != QUESTIONS[params[:number].to_i].last
+      flash[:alert] = "Are you sure you are human?"
+      render :new
+    elsif @person.save
       PersonMailer.with(person: @person).verification_email.deliver_now
       redirect_to @person, notice: "You are successfully registered. We sent you a verification mail to your address <#{@person.email}>. You may have to take a look in your junk folder."
     else
@@ -95,5 +121,12 @@ class PeopleController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
       params.require(:person).permit(:tag_list, :role, :random_id, :verification_token, :name, :pronoun, :email, :about)
+    end
+
+    def new_captcha
+      flash = {}
+      captcha = [rand(QUESTIONS.size) + 1]
+		  captcha << QUESTIONS[captcha.first].first
+      return captcha
     end
 end

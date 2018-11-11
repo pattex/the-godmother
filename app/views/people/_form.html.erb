@@ -16,7 +16,7 @@
   </div>
 
   <div class="form-group">
-    <%= form.text_area :about, { rows: 8, class: "form-control" } %>
+    <%= form.text_area :about, { rows: 8, class: "form-control", placeholder: "Something about yourself, why you registered at the chaos mentors and what your interests are." } %>
   </div>
 
   <div class="form-group">
@@ -24,6 +24,16 @@
     <small id="pronoun-help" class="form-text text-muted">Please give yourself a few tags, describing the languages you speak and your interests. This helps us to form fitting groups.</small>
   </div>
 
+  <div class="form-group">
+    <label>
+      Question: <%= @captcha.last %>
+    </label>
+    <label for="address">Answer</label>
+    <input class="form-control" type="text" name="address" />
+    <small id="pronoun-help" class="form-text text-muted">Sorry, too many spam bots out there.</small>
+  </div>
+
+  <input value="<%= @captcha.first %>" type="hidden" name="number" />
   <%= form.hidden_field :role %>
 
   <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
