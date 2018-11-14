@@ -1,22 +1,22 @@
 class PeopleController < ApplicationController
   QUESTIONS = [
-		["What is two plus two?", "4"],
-		["What is the number before twelve?", "11"],
-		["Five times two is what?", "10"],
-		["Insert the next number in this sequence: 10, 11, 12, 13, 14, …", "15"],
-		["What is five times five?", "25"],
-		["Ten divided by two is what?", "5"],
+		["What is two plus two? (in digits)", "4"],
+		["What is the number before twelve? (in digits)", "11"],
+		["Five times two is what? (in digits)", "10"],
+		["Insert the next number in this sequence: 10, 11, 12, 13, 14, … (in digits)", "15"],
+		["What is five times five? (in digits)", "25"],
+		["Ten divided by two is what? (in digits)", "5"],
 		["What day comes after Monday?", "tuesday"],
 		["What is the last month of the year?", "december"],
-		["How many minutes are in an hour?", "60"],
+		["How many minutes are in an hour? (in digits)", "60"],
 		["What is the opposite of down?", "up"],
 		["What is the opposite of north?", "south"],
 		["What is the opposite of bad?", "good"],
-		["What is 4 times four?", "16"],
-		["What number comes after 20?", "21"],
+		["What is 4 times four? (in digits)", "16"],
+		["What number comes after 20? (in digits)", "21"],
 		["What month comes before July?", "june"],
-		["What is fifteen divided by three?", "5"],
-		["What is 14 minus 4?", "10"],
+		["What is fifteen divided by three? (in digits)", "5"],
+		["What is 14 minus 4? (in digits)", "10"],
 		["What comes next? 'Monday Tuesday Wednesday …'", "thursday"]
   ]
 
@@ -98,7 +98,7 @@ class PeopleController < ApplicationController
         if @person.save
           PersonMailer.with(person: @person).new_person_email.deliver_now
 
-          msg = { notice: "Your e-mail address was successfuly verified.\nYour request will now be forwarded to us (the Chaospatinnen orga team) and we will send you an answer as soon as possible… wich can be a while, sorry for that. ^__^" }
+          msg = { notice: "Your e-mail address was successfuly verified.\nYour request will now be forwarded to us (the Chaospatinnen orga team) and we will send you an answer as soon as possible… which can be a while, sorry for that. ^__^" }
         else
           msg = { alert: "Something went wrong. You may want to contact us." }
         end
