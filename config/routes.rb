@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+  post 'sessions/create'
+  get 'sessions/destroy'
+
   get 'home', to: 'static#home'
   get 'contact', to: 'static#contact'
   get 'privacy', to: 'static#privacy'

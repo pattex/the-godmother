@@ -1,4 +1,7 @@
 class Person < ApplicationRecord
+  has_secure_password validations: false
+	attr_accessor :password_confirmation
+
   has_secure_token :random_id
   has_secure_token :verification_token
 
@@ -9,9 +12,14 @@ class Person < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :about, presence: true
 
+  validates :password, length: { in: 14..72 }
+  validates :password_confirmation, presence: true, unless: Proc.new { |p| p.password.blank? }
+	#TODO: validates password == password_confirmation
+
   ROLES = {
     1 => :mentee,
-    2 => :mentor
+    2 => :mentor,
+    3 => :godmother
   }
 
   STATES = {

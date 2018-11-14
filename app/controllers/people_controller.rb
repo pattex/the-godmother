@@ -21,6 +21,8 @@ class PeopleController < ApplicationController
   ]
 
   before_action :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :require_godmother
+  skip_before_action :require_godmother, only: [:new, :create, :verify_email]
 
   # GET /people
   def index
@@ -128,5 +130,13 @@ class PeopleController < ApplicationController
       captcha = [rand(QUESTIONS.size) + 1]
 		  captcha << QUESTIONS[captcha.first].first
       return captcha
+    end
+
+    def require_godmother
+      unless godmother?
+        flash[:alert] = "You must be logged in."
+        session[:last] = request.original_url
+        redirect_to controller: 'sessions', action: 'new'
+      end
     end
 end
