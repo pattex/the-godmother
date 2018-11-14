@@ -2,7 +2,7 @@ class Person < ApplicationRecord
   has_secure_token :random_id
   has_secure_token :verification_token
 
-  has_many :taggings
+  has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 
   validates :name, presence: true
