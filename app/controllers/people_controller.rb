@@ -67,7 +67,7 @@ class PeopleController < ApplicationController
       render :new
     elsif @person.save
       PersonMailer.with(person: @person).verification_email.deliver_now
-      redirect_to @person, notice: "You are successfully registered. We sent you a verification mail to your address <#{@person.email}>. You may have to take a look in your junk folder."
+      redirect_to home_path, notice: "You are successfully registered. We sent you a verification mail to your address <#{@person.email}>. You may have to take a look in your junk folder."
     else
       render :new
     end
@@ -142,7 +142,7 @@ class PeopleController < ApplicationController
 
     def new_captcha
       flash = {}
-      captcha = [rand(QUESTIONS.size) + 1]
+      captcha = [rand(QUESTIONS.size)]
 		  captcha << QUESTIONS[captcha.first].first
       return captcha
     end
