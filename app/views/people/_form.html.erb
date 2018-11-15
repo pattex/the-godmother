@@ -23,17 +23,18 @@
     <%= form.text_field :tag_list, { placeholder: "e.g.: english, german, coding, antifa, security, freifunk, feminism, …", data: raw(tags) } %>
     <small id="pronoun-help" class="form-text text-muted">Please give yourself a few tags, describing the languages you speak and your interests. This helps us to form fitting groups.</small>
   </div>
+  <% if action_name == 'new' || action_name == 'create' -%>
+    <div class="form-group">
+      <label>
+        Question: <%= @captcha.last %>
+      </label><br>
+      <label for="address">Answer</label>
+      <input class="form-control" type="text" name="address" />
+      <small id="pronoun-help" class="form-text text-muted">Sorry, too many spam bots out there.</small>
+    </div>
+    <input value="<%= @captcha.first %>" type="hidden" name="number" />
+  <% end %>
 
-  <div class="form-group">
-    <label>
-      Question: <%= @captcha.last %>
-    </label><br>
-    <label for="address">Answer</label>
-    <input class="form-control" type="text" name="address" />
-    <small id="pronoun-help" class="form-text text-muted">Sorry, too many spam bots out there.</small>
-  </div>
-
-  <input value="<%= @captcha.first %>" type="hidden" name="number" />
   <%= form.hidden_field :role %>
 
   <%= button_tag(type: 'submit', class: "btn btn-primary") do %>

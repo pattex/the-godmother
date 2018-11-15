@@ -20,7 +20,7 @@ class PeopleController < ApplicationController
 		["What comes next? 'Monday Tuesday Wednesday …'", "thursday"]
   ]
 
-  before_action :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :set_person, only: [:show, :edit, :update, :destroy, :change_password]
   before_action :require_godmother
   skip_before_action :require_godmother, only: [:new, :create, :verify_email]
 
@@ -49,6 +49,10 @@ class PeopleController < ApplicationController
   def edit
   end
 
+	def change_password
+		@person = current_person
+	end
+
   # POST /people
   def create
     @person = Person.new(person_params)
@@ -71,7 +75,18 @@ class PeopleController < ApplicationController
 
   # PATCH/PUT /people/1
   def update
-    if @person.update(person_params)
+    if person_params[:password]
+      if current_person.authenticate(params[:old_password]) && current_person.id == @person.id
+        if @person.update(person_params)
+          redirect_to @person, notice: 'Password was successfully updated.'
+        else
+          render :change_password
+        end
+      else
+        flash[:alert] = 'Wrong old password?'
+        render :change_password
+      end
+    elsif @person.update(person_params)
       redirect_to @person, notice: 'Person was successfully updated.'
     else
       render :edit
@@ -122,7 +137,7 @@ class PeopleController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      params.require(:person).permit(:tag_list, :role, :random_id, :verification_token, :name, :pronoun, :email, :about)
+      params.require(:person).permit(:tag_list, :role, :random_id, :verification_token, :name, :pronoun, :email, :about, :password, :password_confirmation)
     end
 
     def new_captcha
