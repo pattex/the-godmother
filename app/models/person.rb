@@ -13,8 +13,8 @@ class Person < ApplicationRecord
   validates :about, presence: true
 
   validates :password, length: { in: 14..72 }
+  validates :password, confirmation: true
   validates :password_confirmation, presence: true, unless: Proc.new { |p| p.password.blank? }
-	#TODO: validates password == password_confirmation
 
   ROLES = {
     1 => :mentee,
