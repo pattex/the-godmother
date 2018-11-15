@@ -1,9 +1,11 @@
+<% batches = { unverified: 'secondary', verified: 'primary', okay: 'primary', waiting: 'warning', in_group: 'primary', declined: 'danger', done: 'sucess' } -%>
+
 <div class="card">
   <div class="card-header">
-    <%= @person.name %>
+    <%= @person.name %> (<%= @person.role_name.to_s.humanize %>)
+    <span class="badge badge-<%= batches[@person.state_name] %> float-right"><%= @person.state_name.to_s.humanize %></span>
   </div>
   <div class="card-body">
-    <h5 class="card-title"><%= @person.role_name.to_s.humanize %></h5>
     <p>
       <strong>Name:</strong>
       <%= @person.name %>
@@ -27,5 +29,17 @@
       <strong>Tags:</strong>
       <%= @person.tag_list %>
     </p>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-4">
+    <%= link_to 'Replied and okay', { action: "change_state", random_id: @person, state: 3 }, { class: 'btn btn-primary btn-lg btn-block active' } %>
+  </div>
+  <div class="col-md-4">
+    <%= link_to 'Replied and waiting for answer', { action: "change_state", random_id: @person, state: 4 }, { class: 'btn btn-secondary btn-lg btn-block active' } %>
+  </div>
+  <div class="col-md-4">
+    <%= link_to 'Declined', { action: "change_state", random_id: @person, state: 23 }, { class: 'btn btn-danger btn-lg btn-block active' } %>
   </div>
 </div>

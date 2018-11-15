@@ -20,7 +20,7 @@ class PeopleController < ApplicationController
 		["What comes next? 'Monday Tuesday Wednesday …'", "thursday"]
   ]
 
-  before_action :set_person, only: [:show, :edit, :update, :destroy, :change_password]
+  before_action :set_person, only: [:show, :edit, :update, :destroy, :change_password, :change_state]
   before_action :require_godmother
   skip_before_action :require_godmother, only: [:new, :create, :verify_email]
 
@@ -127,6 +127,20 @@ class PeopleController < ApplicationController
     end
 
     redirect_to home_path, msg
+  end
+
+  def change_state
+    if !Person::STATES.keys.include?(params[:state])
+      @person.state = params[:state]
+
+      if @person.save
+        redirect_to @person, notice: "State was successfully updated to: #{@person.state_name.to_s.humanize}"
+      else
+        redirect_to @person, alert: 'Something went wrong.'
+      end
+    else
+      redirect_to @person, alert: 'Invalid state.'
+    end
   end
 
   private

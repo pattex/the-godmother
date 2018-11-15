@@ -12,7 +12,7 @@ class Person < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :about, presence: true
 
-  validates :password, length: { in: 14..72 }, if: Proc.new { |p| p.role == 3 }
+  validates :password, length: { in: 14..72 }, if: Proc.new { |p| p.role == 3 && p.password != nil }
   validates :password, confirmation: true, if: Proc.new { |p| p.role == 3 }
   validates :password_confirmation, presence: true, unless: Proc.new { |p| p.password.blank? }
 
