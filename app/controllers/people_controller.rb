@@ -24,11 +24,6 @@ class PeopleController < ApplicationController
   before_action :require_godmother
   skip_before_action :require_godmother, only: [:new, :create, :verify_email]
 
-  # GET /people
-  def index
-    @people = Person.all
-  end
-
   # GET /people/1
   def show
   end
