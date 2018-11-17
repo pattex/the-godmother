@@ -6,6 +6,7 @@
     <span class="badge badge-<%= batches[@person.state_name] %> float-right"><%= @person.state_name.to_s.humanize %></span>
   </div>
   <div class="card-body">
+    <%= link_to 'Edit', edit_person_path(@person), class: 'btn btn-primary active float-right' %>
     <p>
       <strong>Name:</strong>
       <%= @person.name %>
@@ -22,8 +23,8 @@
     </p>
 
     <p>
-      <strong>About:</strong>
-      <%= @person.about %>
+      <strong>About:</strong><br>
+      <%= simple_format(@person.about) %>
     </p>
     <p>
       <strong>Tags:</strong>
