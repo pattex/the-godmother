@@ -1,17 +1,25 @@
 class Person < ApplicationRecord
+  has_secure_password validations: false
+	attr_accessor :password_confirmation
+
   has_secure_token :random_id
   has_secure_token :verification_token
 
-  has_many :taggings
+  has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :about, presence: true
 
+  validates :password, length: { in: 14..72 }, if: Proc.new { |p| p.role == 3 && p.password != nil }
+  validates :password, confirmation: true, if: Proc.new { |p| p.role == 3 }
+  validates :password_confirmation, presence: true, unless: Proc.new { |p| p.password.blank? }
+
   ROLES = {
     1 => :mentee,
-    2 => :mentor
+    2 => :mentor,
+    3 => :godmother
   }
 
   STATES = {
@@ -70,8 +78,8 @@ class Person < ApplicationRecord
   end
 
   def tag_list=(names)
-    self.tags = names.split(", ").map do |n|
-      Tag.where(name: n.strip).first_or_create!
+    self.tags = names.split(",").map do |n|
+      Tag.where(name: n.strip.downcase).first_or_create!
     end
   end
 

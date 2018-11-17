@@ -12,17 +12,28 @@
 
   <div class="form-group">
     <%= form.text_field :email, { type: "email", class: "form-control" } %>
-    <small id="email-help" class="form-text text-muted">We will send you e-mail. So, this have to be a real address. For real. You know? Real.</small>
+    <small id="email-help" class="form-text text-muted">We will send you e-mail. So, this has to be a real address. For real. You know? Real.</small>
   </div>
 
   <div class="form-group">
-    <%= form.text_area :about, { rows: 8, class: "form-control" } %>
+    <%= form.text_area :about, { rows: 8, class: "form-control", placeholder: "Something about yourself, why you registered at the chaos mentors and what your interests are." } %>
   </div>
 
   <div class="form-group">
     <%= form.text_field :tag_list, { placeholder: "e.g.: english, german, coding, antifa, security, freifunk, feminism, …", data: raw(tags) } %>
     <small id="pronoun-help" class="form-text text-muted">Please give yourself a few tags, describing the languages you speak and your interests. This helps us to form fitting groups.</small>
   </div>
+  <% if action_name == 'new' || action_name == 'create' -%>
+    <div class="form-group">
+      <label>
+        Question: <%= @captcha.last %>
+      </label><br>
+      <label for="address">Answer</label>
+      <input class="form-control" type="text" name="address" />
+      <small id="pronoun-help" class="form-text text-muted">Sorry, too many spam bots out there.</small>
+    </div>
+    <input value="<%= @captcha.first %>" type="hidden" name="number" />
+  <% end %>
 
   <%= form.hidden_field :role %>
   <div class="form-group">
