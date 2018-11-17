@@ -139,6 +139,11 @@ class PeopleController < ApplicationController
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_person
+      @person = Person.find_by(random_id: params[:random_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
       params.require(:person).permit(:tag_list, :role, :random_id, :verification_token, :name, :pronoun, :email, :about, :password, :password_confirmation)

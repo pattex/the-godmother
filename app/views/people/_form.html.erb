@@ -1,7 +1,7 @@
 <%= bootstrap_form_with(model: person, local: true) do |form| %>
   <div class="form-row">
     <div class="form-group col-md-4">
-      <%= form.text_field :pronoun, { type: "text", class: "form-control", placeholder: "e.g.: She/They/Xe/He/…" } %>
+      <%= form.text_field :pronoun, { type: "text", class: "form-control", placeholder: "e.g. She/They/Xe/He/…" } %>
       <small id="pronoun-help" class="form-text text-muted">This information helps us to form balanced groups.</small>
     </div>
 
@@ -36,11 +36,10 @@
   <% end %>
 
   <%= form.hidden_field :role %>
-  <div class="form-group">
-    <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-      Send
-    <% end %>
-  </div>
+
+  <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+    Send
+  <% end %>
 <% end %>
 
 <%= javascript_tag do %>
