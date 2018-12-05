@@ -28,6 +28,14 @@ class PeopleController < ApplicationController
   # GET /people
   def index
     @people = Person.all
+
+    if params[:r]
+      @people = @people.where(role: params[:r])
+    end
+
+    if params[:s]
+      @people = @people.where(state: params[:s])
+    end
   end
 
   # GET /people/1

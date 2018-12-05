@@ -1,33 +1,27 @@
 <h1>People</h1>
 
-<table>
+<%= link_to 'New Person', new_person_path %>
+
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Random ID</th>
-      <th>Name</th>
-      <th>Pronoun</th>
-      <th>Email</th>
-      <th>About</th>
-      <th colspan="3"></th>
+      <th scope="col">Random ID</th>
+      <th scope="col">Pronoun</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Tags</th>
     </tr>
   </thead>
 
   <tbody>
     <% @people.each do |person| %>
       <tr>
-        <td><%= person.random_id %></td>
-        <td><%= person.name %></td>
+        <td><%= link_to person.random_id, person %></td>
         <td><%= person.pronoun %></td>
+        <td><%= person.name %></td>
         <td><%= person.email %></td>
-        <td><%= person.about %></td>
-        <td><%= link_to 'Show', person %></td>
-        <td><%= link_to 'Edit', edit_person_path(person) %></td>
-        <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= person.tag_list %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Person', new_person_path %>
