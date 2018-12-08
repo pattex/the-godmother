@@ -1,0 +1,27 @@
+<h1>People</h1>
+
+<%= link_to 'New Person', new_person_path %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Random ID</th>
+      <th scope="col">Pronoun</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Tags</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @people.each do |person| %>
+      <tr>
+        <td><%= link_to person.random_id, person %></td>
+        <td><%= person.pronoun %></td>
+        <td><%= person.name %></td>
+        <td><%= person.email %></td>
+        <td><%= person.tag_list %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
