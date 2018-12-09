@@ -1,6 +1,29 @@
-<h1>People</h1>
+<h1>
+  <% if params[:r].to_i == 1 %>
+    Mentees
+  <% elsif params[:r].to_i == 2 %>
+    Mentors
+  <% else %>
+    People
+  <% end %>
+</h1>
 
-<%= link_to 'New Person', new_person_path %>
+<p>
+  <%= link_to 'New Person', new_person_path %>
+</p>
+
+<p>
+  <% Person::STATES.each do |k, v| %>
+    <% if params[:s].to_i == k %>
+      <% badge = state_batches[v] %>
+    <% else %>
+      <% badge = 'secondary' %>
+    <% end %>
+    <%= link_to v.to_s.humanize, { controller: 'people', action: 'index', r: params[:r], s: k }, class: "badge badge-#{badge}" %>
+  <% end %>
+  <%= link_to 'X', { controller: 'people', action: 'index', r: params[:r] }, class: "badge badge-secondary" %>
+</p>
+
 
 <table class="table table-striped">
   <thead>

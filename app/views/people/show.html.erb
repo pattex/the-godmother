@@ -1,9 +1,7 @@
-<% batches = { unverified: 'secondary', verified: 'primary', okay: 'primary', waiting: 'warning', in_group: 'primary', declined: 'danger', done: 'sucess' } -%>
-
 <div class="card">
   <div class="card-header">
     <%= @person.name %> (<%= @person.role_name.to_s.humanize %>)
-    <span class="badge badge-<%= batches[@person.state_name] %> float-right"><%= @person.state_name.to_s.humanize %></span>
+    <span class="badge badge-<%= state_batches[@person.state_name] %> float-right"><%= @person.state_name.to_s.humanize %></span>
   </div>
   <div class="card-body">
     <%= link_to 'Edit', edit_person_path(@person), class: 'btn btn-primary active float-right' %>
