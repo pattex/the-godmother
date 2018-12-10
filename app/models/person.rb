@@ -8,7 +8,7 @@ class Person < ApplicationRecord
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 
-  belongs_to :group
+  belongs_to :group, required: false
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
