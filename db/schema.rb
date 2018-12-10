@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_191635) do
+ActiveRecord::Schema.define(version: 2018_12_09_171254) do
+
+  create_table "groups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "people", force: :cascade do |t|
     t.string "name"
@@ -24,6 +29,7 @@ ActiveRecord::Schema.define(version: 2018_11_14_191635) do
     t.integer "role", default: 1
     t.integer "state", default: 1
     t.string "password_digest"
+    t.integer "group_id"
     t.index ["email"], name: "index_people_on_email", unique: true
     t.index ["random_id"], name: "index_people_on_random_id", unique: true
     t.index ["verification_token"], name: "index_people_on_verification_token", unique: true

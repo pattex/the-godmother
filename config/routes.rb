@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :groups
   get 'sessions/new'
   post 'sessions/create'
   get 'sessions/destroy'
