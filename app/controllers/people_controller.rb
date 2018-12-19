@@ -153,28 +153,20 @@ class PeopleController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_person
-      @person = Person.find_by(random_id: params[:random_id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_person
+    @person = Person.find_by(random_id: params[:random_id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def person_params
-      params.require(:person).permit(:tag_list, :role, :random_id, :verification_token, :name, :pronoun, :email, :about, :password, :password_confirmation)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def person_params
+    params.require(:person).permit(:tag_list, :role, :random_id, :verification_token, :name, :pronoun, :email, :about, :password, :password_confirmation)
+  end
 
-    def new_captcha
-      flash = {}
-      captcha = [rand(QUESTIONS.size)]
-		  captcha << QUESTIONS[captcha.first].first
-      return captcha
-    end
-
-    def require_godmother
-      unless godmother?
-        flash[:alert] = "You must be logged in."
-        session[:last] = request.original_url
-        redirect_to controller: 'sessions', action: 'new'
-      end
-    end
+  def new_captcha
+    flash = {}
+    captcha = [rand(QUESTIONS.size)]
+    captcha << QUESTIONS[captcha.first].first
+    return captcha
+  end
 end

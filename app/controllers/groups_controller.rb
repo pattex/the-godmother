@@ -16,6 +16,7 @@ class GroupsController < ApplicationController
   # GET /groups/new
   def new
     @group = Group.new
+    @mentors = Person.where(role: 2).where(state: 3)
   end
 
   # GET /groups/1/edit
@@ -25,16 +26,15 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
-    @group = Group.new(group_params)
+    @group = Group.new
+    @group.mentor_ids = params[:group][:mentor_ids]
 
-    respond_to do |format|
-      if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
-        format.json { render :show, status: :created, location: @group }
-      else
-        format.html { render :new }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
-      end
+    if @group.save
+      redirect_to @group, notice: 'Group was successfully created.'
+    else
+      @mentors = Person.where(role: 2).where(state: 3)
+      flash[:alert] = "You have to select a mentor."
+      render :new
     end
   end
 
@@ -70,6 +70,6 @@ class GroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.fetch(:group, {})
+      params.require(:group).permit(:mentor_ids)
     end
 end

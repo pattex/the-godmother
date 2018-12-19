@@ -22,4 +22,12 @@ class ApplicationController < ActionController::Base
       redirect_to home_path, alert: "Sorry, registration is closed."
     end
   end
+
+  def require_godmother
+    unless godmother?
+      flash[:alert] = "You must be logged in."
+      session[:last] = request.original_url
+      redirect_to controller: 'sessions', action: 'new'
+    end
+  end
 end
