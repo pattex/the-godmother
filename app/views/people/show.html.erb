@@ -28,6 +28,12 @@
       <strong>Tags:</strong>
       <%= @person.tag_list %>
     </p>
+    <% if @person.group %>
+    <p>
+      <strong>Group:</strong>
+      <%= link_to @person.group.mentors.map { |m| m.name }.join(', '), @person.group %>
+    </p>
+    <% end %>
   </div>
 </div>
 <br>

@@ -2,13 +2,15 @@
 
 <h1>Groups</h1>
 
+<%= link_to 'New Group', new_group_path %>
+
 <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">Mentor names</th>
       <th scope="col">Mentees count</th>
       <th scope="col">Status</th>
-      <th scope="col" colspan="2"></th>
+      <th scope="col" colspan="1"></th>
     </tr>
   </thead>
 
@@ -17,14 +19,9 @@
       <tr>
         <td><%= link_to group.mentors.map { |m| m.name }.join(', '), group %></td>
         <td><%= group.mentees.size %></td>
-        <td><%= group.mentors.first.state_name %></td>
+        <td><span class="badge badge-<%= state_batches[group.mentors.first.state_name] %>"><%= group.mentors.first.state_name.to_s.humanize %></span></td>
         <td><%= link_to 'Edit', edit_group_path(group) %></td>
-        <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Group', new_group_path %>
