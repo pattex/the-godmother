@@ -17,7 +17,7 @@
   <tbody>
     <% @mentors.each do |mentor| %>
       <tr>
-        <td><%= check_box_tag "group[mentor_ids][]", mentor.id, @group.mentors.include?(mentor) %></td>
+        <td><%= check_box_tag "group[mentor_ids][]", mentor.id, (mentor.group_id && @group.mentors.include?(mentor)) %></td>
         <td><%= mentor.pronoun %></td>
         <td><%= link_to mentor.name, mentor %></td>
         <td><%= mentor.tag_list %></td>
