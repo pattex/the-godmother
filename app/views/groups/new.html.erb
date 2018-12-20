@@ -1,5 +1,29 @@
 <h1>New Group</h1>
 
-<%= render 'form', group: @group %>
+<p>Select one or more mentors</p>
 
-<%= link_to 'Back', groups_path %>
+<%= bootstrap_form_with(model: @group, local: true) do |form| %>
+<%= form.submit %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Pronoun</th>
+      <th scope="col">Name</th>
+      <th scope="col">Tags</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @mentors.each do |mentor| %>
+      <tr>
+        <td><%= check_box_tag "group[mentor_ids][]", mentor.id, (mentor.group_id && @group.mentors.include?(mentor)) %></td>
+        <td><%= mentor.pronoun %></td>
+        <td><%= link_to mentor.name, mentor %></td>
+        <td><%= mentor.tag_list %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% end %>
