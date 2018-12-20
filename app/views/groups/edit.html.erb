@@ -1,6 +1,63 @@
-<h1>Editing Group</h1>
+<h1>Editing Group <small>(<%= @group.mentors.map { |m| m.name }.join(', ') %>)</small></h1>
+<%= bootstrap_form_with(model: @group, local: true) do |form| %>
 
-<%= render 'form', group: @group %>
+  <div class="align-items-end">
+    <%= form.submit 'Save', class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', @group, { class: 'btn btn-secondary'} %>
+  </div>
+
+  <p>
+    <a "btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Click to edit group mentors</a>
+  </p>
+
+  <div class="collapse" id="collapseExample">
+    <h2>Select one or more mentors</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Pronoun</th>
+          <th scope="col">Name</th>
+          <th scope="col">Tags</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @mentors.each do |mentor| %>
+          <tr>
+            <td><%= check_box_tag "group[mentor_ids][]", mentor.id, (mentor.group_id && @group.mentors.include?(mentor)) %></td>
+            <td><%= mentor.pronoun %></td>
+            <td><%= link_to mentor.name, mentor %></td>
+            <td><%= mentor.tag_list %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Select one or more mentees</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Pronoun</th>
+        <th scope="col">Name</th>
+        <th scope="col">Tags</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @mentees.each do |mentee| %>
+        <tr>
+          <td><%= check_box_tag "group[mentee_ids][]", mentee.id, (mentee.group_id && @group.mentees.include?(mentee)) %></td>
+          <td><%= mentee.pronoun %></td>
+          <td><%= link_to mentee.name, mentee %></td>
+          <td><%= mentee.tag_list %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% end %>
 
 <%= link_to 'Show', @group %> |
-<%= link_to 'Back', groups_path %>

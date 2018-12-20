@@ -1,7 +1,7 @@
 <h1></h1>
 <div class="card">
   <div class="card-header">
-    Group <small><%= @group.mentors.map { |m| m.name }.join(', ') %></small>
+    Group <small>(<%= @group.mentors.map { |m| m.name }.join(', ') %>)</small>
     <span class="badge badge-<%= state_batches[@group.mentors.first.state_name] %> float-right"><%= @group.mentors.first.state_name.to_s.humanize %></span>
   </div>
   <div class="card-body">

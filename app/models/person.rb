@@ -16,8 +16,6 @@ class Person < ApplicationRecord
   validates :password, confirmation: true, if: Proc.new { |p| p.role == 3 }
   validates :password_confirmation, presence: true, unless: Proc.new { |p| p.password.blank? }
 
-  before_save :align_group_state
-
   ROLES = {
     1 => :mentee,
     2 => :mentor,
@@ -87,13 +85,12 @@ class Person < ApplicationRecord
 
   def align_group_state
     unless self.state_name == :done
-      if self.state_name == :in_group && self.group.blank?
+      if self.state_name == :in_group && self.group_id.blank?
         self.state_name = :okay
-      elsif self.state_name != :in_group && self.group
+      elsif self.state_name != :in_group && self.group_id
         self.state_name = :in_group
       end
     end
-
   end
 
 end

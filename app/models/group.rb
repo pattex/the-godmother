@@ -2,7 +2,7 @@ class Group < ApplicationRecord
   has_many :mentors, class_name: 'Person'
   has_many :mentees, class_name: 'Person'
 
-  validates :mentors, presence: true, on: :create
+  validates :mentors, presence: true
 
   def mentors
     Person.where(group_id: self.id).where(role: 2)

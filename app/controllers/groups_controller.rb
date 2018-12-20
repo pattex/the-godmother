@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   before_action :require_godmother
   before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :align_person_state, only: [:edit, :new]
 
   # GET /groups
   # GET /groups.json
@@ -21,6 +22,8 @@ class GroupsController < ApplicationController
 
   # GET /groups/1/edit
   def edit
+    @mentees = @group.mentees + Person.where(role: 1).where(state: 3)
+    @mentors = @group.mentors + Person.where(role: 2).where(state: 3)
   end
 
   # POST /groups
@@ -41,14 +44,15 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
   def update
-    respond_to do |format|
-      if @group.update(group_params)
-        format.html { redirect_to @group, notice: 'Group was successfully updated.' }
-        format.json { render :show, status: :ok, location: @group }
-      else
-        format.html { render :edit }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
-      end
+    params[:group][:mentee_ids] ||= []
+    params[:group][:mentor_ids] ||= []
+
+    people_ids = params[:group][:mentee_ids] + params[:group][:mentor_ids]
+
+    if @group.update(mentee_ids: people_ids)
+      redirect_to @group, notice: 'Group was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -70,6 +74,10 @@ class GroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:mentor_ids)
+      params.require(:group).permit(:mentor_ids, :entee_ids)
+    end
+
+    def align_person_state
+      Person.where("state = 5 OR state = 3").each { |p| p.save if p.align_group_state }
     end
 end
