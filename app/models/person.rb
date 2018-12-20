@@ -7,16 +7,16 @@ class Person < ApplicationRecord
 
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
-
   belongs_to :group, required: false
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :about, presence: true
-
   validates :password, length: { in: 14..72 }, if: Proc.new { |p| p.role == 3 && p.password != nil }
   validates :password, confirmation: true, if: Proc.new { |p| p.role == 3 }
   validates :password_confirmation, presence: true, unless: Proc.new { |p| p.password.blank? }
+
+  before_save :align_group_state
 
   ROLES = {
     1 => :mentee,
@@ -83,6 +83,17 @@ class Person < ApplicationRecord
     self.tags = names.split(",").map do |n|
       Tag.where(name: n.strip.downcase).first_or_create!
     end
+  end
+
+  def align_group_state
+    unless self.state_name == :done
+      if self.state_name == :in_group && self.group.blank?
+        self.state_name = :okay
+      elsif self.state_name != :in_group && self.group
+        self.state_name = :in_group
+      end
+    end
+
   end
 
 end
