@@ -5,7 +5,7 @@ class Group < ApplicationRecord
   validates :mentors, presence: true
 
   def mentors
-    Person.where(group_id: self.id).where(role: 2)
+    Person.where(group_id: self.id).where("role = 2 OR role = 3")
   end
 
   def mentor_ids

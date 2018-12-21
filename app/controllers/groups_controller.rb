@@ -17,13 +17,13 @@ class GroupsController < ApplicationController
   # GET /groups/new
   def new
     @group = Group.new
-    @mentors = Person.where(role: 2).where(state: 3)
+    @mentors = Person.where("role = 2 OR role = 3").where(state: 3)
   end
 
   # GET /groups/1/edit
   def edit
     @mentees = @group.mentees + Person.where(role: 1).where(state: 3)
-    @mentors = @group.mentors + Person.where(role: 2).where(state: 3)
+    @mentors = @group.mentors + Person.where("role = 2 OR role = 3").where(state: 3)
   end
 
   # POST /groups
