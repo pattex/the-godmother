@@ -66,6 +66,10 @@ class GroupsController < ApplicationController
       p.save
     end
 
+    @group.mentors.each do |mentor|
+      PersonMailer.with(mentor: mentor).your_mentees.deliver_now
+    end
+
     redirect_to @group, notice: 'Group was successfully updated to done and an email was sent to groups mentor(s).'
   end
 

@@ -1,0 +1,65 @@
+*English version below*
+
+Hallo <%= @mentor.name %>,
+
+wir haben das Matching durchgeführt! Wir freuen uns sehr darüber, dir heute endlich deine Patenkinder vorstellen zu dürfen :)
+
+Deine Patenkinder sind: <%= @mentor.group.mentees.map { |m| m.name }.join(', ') %>
+
+Ihre Angaben bei der Registrierung findest Du weiter unten.
+
+Wie du mit den Patenkindern vorgehst bleibt natürlich dir überlassen und hängt auch immer von der Gruppe ab.
+
+Ansonsten hier noch ein kleiner Reminder:
+
+* Es wäre toll, wenn du allen möglichst schnell etwas schreibst und dich selber dabei kurz vorstellst. Dabei bitte chaosmentors@lists.ccc.de in CC nehmen, damit wir wissen, dass das erledigt ist und die Patenkinder versorgt sind.
+* Bitte die Patenkinder darum, sich ebenfalls vorzustellen, damit sie sich auch gegenseitig schon mal kennenlernen.
+* Vielleicht haben sie auch Lust drauf, eine Threema/Telegram/Signal-Gruppe aufzumachen um sich zu verständigen, hier kannst du gerne einen Vorschlag machen .
+* Wenn der Kongress näher rückt, könnt ihr ein Treffen am ersten Tag ausmachen, manche sind schon am 26.12 da, manche später. Sobald ihr das herausgefunden habt, könnt ihr eure gemeinsame CCL-Tour planen.
+* Wir werden wieder um 10 Uhr Tag 1 eine offizielle Begrüßung an unserer Assembly machen, kommt gerne dazu!
+
+Was ihr darüber hinaus macht - gemeinsam Talks besuchen, hacken, Bier trinken, etc. ist euch überlassen.
+
+Bis dahin wünschen wir dir eine gute Zeit, danke dir wirklich sehr für deine Unterstützung und wir freuen uns darauf, euch alle zu treffen!
+
+—-
+
+Dear <%= @mentor.name %>,
+
+We did the matching and now we are very happy to finally introduce your mentees :)
+
+Your group of mentees are: <%= @mentor.group.mentees.map { |m| m.name }.join(', ') %>
+
+Scroll down to see the informations, your mentees gave us with their registration.
+
+How you proceed with the mentees is of course up to you and always depends on the group.
+
+Here are a few suggestions:
+
+* It would be great if you could write a short letter and introduce yourself. Please include chaosmentors@lists.ccc.de in CC, so that we know that this is done and that the mentees are taken care of.
+Ask the mentees to introduce themselves so that they can get to know each other.
+* Maybe you would like to suggest opening a Threema/Telegram/Signal group to communicate with each other.
+* As the congress approaches, you can arrange a meetup on the first day; some mentees will arrive as early as 26.12, some later. When you find out, you can plan your CCL tour together. Perhaps you’d like to suggest meeting at the FairyDust rocket - an easy-to-locate landmark which is usually just at the entrance.
+
+We will again make an official welcome at our Assembly at 10 a.m. Day 1 - come and join us!
+
+What you do beyond that - visiting talks together, hacking, drinking beer/mate/tschunk (or water), etc. is up to you.
+
+Until then we wish you a good time! Thank you very much for your support and we look forward to meeting you all!
+
+*********************************************************************
+
+<% @mentor.group.mentees.each do |mentee| %>
+This is <%= mentee.name %>.
+<%= mentee.pronoun ? mentee.pronoun : 'They' %> gave us the following information:
+
+E-mail: <%= mentee.email %>
+
+About:
+<%= mentee.about %>
+
+Tags: <%= mentee.tag_list %>
+
+*********************************************************************
+
+<% end %>
