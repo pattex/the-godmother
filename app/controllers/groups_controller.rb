@@ -1,16 +1,14 @@
 class GroupsController < ApplicationController
   before_action :require_godmother
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :done]
   before_action :align_person_state, only: [:edit, :new]
 
   # GET /groups
-  # GET /groups.json
   def index
     @groups = Group.all
   end
 
   # GET /groups/1
-  # GET /groups/1.json
   def show
   end
 
@@ -27,7 +25,6 @@ class GroupsController < ApplicationController
   end
 
   # POST /groups
-  # POST /groups.json
   def create
     @group = Group.new
     @group.mentor_ids = params[:group][:mentor_ids]
@@ -42,7 +39,6 @@ class GroupsController < ApplicationController
   end
 
   # PATCH/PUT /groups/1
-  # PATCH/PUT /groups/1.json
   def update
     params[:group][:mentee_ids] ||= []
     params[:group][:mentor_ids] ||= []
@@ -57,13 +53,20 @@ class GroupsController < ApplicationController
   end
 
   # DELETE /groups/1
-  # DELETE /groups/1.json
   def destroy
     @group.destroy
-    respond_to do |format|
-      format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
-      format.json { head :no_content }
+    redirect_to groups_url, notice: 'Group was successfully destroyed.'
+  end
+
+  def done
+    people = @group.mentors + @group.mentees
+
+    people.each do |p|
+      p.state_name = :done
+      p.save
     end
+
+    redirect_to @group, notice: 'Group was successfully updated to done and an email was sent to groups mentor(s).'
   end
 
   private
