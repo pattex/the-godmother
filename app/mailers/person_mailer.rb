@@ -24,4 +24,17 @@ class PersonMailer < ApplicationMailer
 
     mail(options)
   end
+
+  def your_mentees
+    @mentor = params[:mentor]
+
+    options = {
+      to: @mentor.email,
+      reply_to: Rails.configuration.x.basic.list_address,
+      cc: Rails.configuration.x.basic.list_address,
+      subject: "Chaospatinnen - Your Mentees [#{@mentor.random_id}]"
+    }
+
+    mail(options)
+  end
 end
