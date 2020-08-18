@@ -12,14 +12,14 @@ class Person < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :about, presence: true
-  validates :password, length: { in: 14..72 }, if: Proc.new { |p| p.role == 3 && p.password != nil }
-  validates :password, confirmation: true, if: Proc.new { |p| p.role == 3 }
+  validates :password, length: { in: 14..72 }, if: Proc.new { |p| p.isGodmother && p.password != nil }
+  validates :password, confirmation: true, if: Proc.new { |p| p.isGodmother }
   validates :password_confirmation, presence: true, unless: Proc.new { |p| p.password.blank? }
 
   ROLES = {
     1 => :mentee,
     2 => :mentor,
-    3 => :godmother
+    3 => :godmother # This role means, you are a godmother only, but not a mentor
   }
 
   STATES = {
@@ -33,7 +33,11 @@ class Person < ApplicationRecord
   }
 
   def role_name
-    ROLES[self.role]
+    if self.isGodmother
+      ROLES[3]
+    else
+      ROLES[self.role]
+    end
   end
 
   def role_name=(r)
@@ -41,6 +45,9 @@ class Person < ApplicationRecord
 
     if r
       self.role = r
+      if self.role == 3
+        self.isGodmother = true
+      end
     else
       self.role = 1
     end
