@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_09_171254) do
+ActiveRecord::Schema.define(version: 2020_08_16_193644) do
 
   create_table "groups", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2018_12_09_171254) do
     t.integer "state", default: 1
     t.string "password_digest"
     t.integer "group_id"
+    t.boolean "isGodmother"
     t.index ["email"], name: "index_people_on_email", unique: true
     t.index ["random_id"], name: "index_people_on_random_id", unique: true
     t.index ["verification_token"], name: "index_people_on_verification_token", unique: true

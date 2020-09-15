@@ -1,5 +1,5 @@
 class PersonMailer < ApplicationMailer
-  default from: "chaospatinnen@kleinerdrei.net"
+  default from: "chaosmentors@ccchb.de"
 
   def verification_email
     @person = params[:person]
