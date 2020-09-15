@@ -90,6 +90,10 @@ class Person < ApplicationRecord
     end
   end
 
+  def is_godmother
+    self.isGodmother
+  end
+
   def align_group_state
     unless self.state_name == :done
       if self.state_name == :in_group && self.group_id.blank?

@@ -23,6 +23,13 @@
     <%= form.text_field :tag_list, { placeholder: "e.g.: english, german, coding, antifa, security, freifunk, feminism, …", data: raw(tags) } %>
     <small id="pronoun-help" class="form-text text-muted">Please give yourself a few tags, describing the languages you speak and your interests. This helps us to form fitting groups.</small>
   </div>
+
+  <% if current_person.isGodmother? && @person != current_person  && @person.role > 1 %>
+  <div class="form-group">
+    <%= form.check_box :is_godmother %>
+  </div>
+<% end %>
+
   <% if action_name == 'new' || action_name == 'create' -%>
     <div class="form-group">
       <label>
