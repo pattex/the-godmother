@@ -32,12 +32,12 @@ class Person < ApplicationRecord
     42 => :done
   }
 
+  def role_id
+    self.role
+  end
+
   def role_name
-    if self.isGodmother
-      ROLES[3]
-    else
-      ROLES[self.role]
-    end
+    ROLES[self.role]
   end
 
   def role_name=(r)
@@ -51,6 +51,12 @@ class Person < ApplicationRecord
     else
       self.role = 1
     end
+  end
+
+  def roles_all
+    ROLES.collect { |k, v|
+      [v,k]
+    }
   end
 
   def state_name
