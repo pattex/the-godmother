@@ -32,10 +32,6 @@ class Person < ApplicationRecord
     42 => :done
   }
 
-  def role_id
-    self.role
-  end
-
   def role_name
     ROLES[self.role]
   end

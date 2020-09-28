@@ -26,13 +26,13 @@
 
   <% if current_person.isGodmother? %>
     <div class="form-group">
-      <%= form.select :role_id, @person.roles_all %>
+      <%= form.select :role, @person.roles_all %>
     </div>
   <% end %>
 
   <% if current_person.isGodmother? && @person != current_person  && @person.role > 1 %>
     <div class="form-group">
-      <%= form.check_box :is_godmother %>
+      <%= form.check_box :isGodmother %>
     </div>
   <% end %>
 
@@ -47,8 +47,6 @@
     </div>
     <input value="<%= @captcha.first %>" type="hidden" name="number" />
   <% end %>
-
-  <%= form.hidden_field :role %>
 
   <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
     Send
