@@ -24,11 +24,21 @@
     <small id="pronoun-help" class="form-text text-muted">Please give yourself a few tags, describing the languages you speak and your interests. This helps us to form fitting groups.</small>
   </div>
 
-  <% if current_person.isGodmother? && @person != current_person  && @person.role > 1 %>
-  <div class="form-group">
-    <%= form.check_box :is_godmother %>
-  </div>
-<% end %>
+  <% if current_person.isGodmother? %>
+    <div class="form-group">
+      <%= form.select :role_id, [
+        ["Mentee", 1],
+        ["Mentor", 2],
+        ["Godmother Only", 3]
+      ] %>
+    </div>
+  <% end %>
+
+  <% if current_person.isGodmother? && @person != current_person  && @person.role == 2 %>
+    <div class="form-group">      
+      <%= form.check_box :is_godmother %>
+    </div>
+  <% end %>
 
   <% if action_name == 'new' || action_name == 'create' -%>
     <div class="form-group">
@@ -41,8 +51,6 @@
     </div>
     <input value="<%= @captcha.first %>" type="hidden" name="number" />
   <% end %>
-
-  <%= form.hidden_field :role %>
 
   <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
     Send

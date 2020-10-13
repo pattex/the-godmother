@@ -33,24 +33,43 @@ class Person < ApplicationRecord
   }
 
   def role_name
-    if self.isGodmother
-      ROLES[3]
-    else
-      ROLES[self.role]
+    ROLES[self.role]
+  end
+
+  def role_id
+    self.role
+  end
+
+  def role_id=(r)
+    if r
+      self.role = r
+      case self.role
+      when 1
+        self.isGodmother = false
+      when 3
+        self.isGodmother = true
+      end
     end
   end
 
   def role_name=(r)
     r = ROLES.key(r.to_sym)
 
-    if r
+    if r      
       self.role = r
-      if self.role == 3
+      case self.role
+      when 1
+        self.isGodmother = false
+      when 3
         self.isGodmother = true
       end
     else
       self.role = 1
     end
+  end
+
+  def role_all
+    ROLES.collect { |k, v| k }
   end
 
   def state_name
@@ -92,6 +111,17 @@ class Person < ApplicationRecord
 
   def is_godmother
     self.isGodmother
+  end
+
+  def is_godmother=(g)
+    case self.role
+    when 1
+      self.isGodmother = false
+    when 2
+      self.isGodmother = g
+    when 3
+      self.isGodmother = true
+    end
   end
 
   def align_group_state
